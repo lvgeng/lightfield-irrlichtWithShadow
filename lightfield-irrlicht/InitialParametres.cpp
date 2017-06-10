@@ -3,68 +3,91 @@
 
 void InitialParametres::defaultValuesInitializing()
 {
-	widthOfRenderzoneByPixel = 3840/4;
-	heightOfRenderzoneByPixel = 2160/4;
+	widthOfRenderzoneByPixel = 3840;
+	heightOfRenderzoneByPixel = 2160;
 	isFullscreen = false;
 	widthOfSubimageByPixel = 36;
 	heightOfSubimageByPixel = 36;
 
-	xOffsetByPixel = 0;
+	xOffsetByPixel = 10;
 	yOffsetByPixel = 0;
 	/*widthOfSubimageBymm = 5.6;
 	heightOfSubimageBymm = 5.6;*/
-	widthOfRenderzoneBymm = 597.0/4;
-	heightOfRenderzoneBymm = 335.7/4;
+	widthOfRenderzoneBymm = 597.0;
+	heightOfRenderzoneBymm = 335.7;
 
-	thicknessOfTransparentMaterialBetweenDevices = 3.0;
-	refractionIndexOfTransparentMaterial = 1.208125;
+	thicknessOfTransparentMaterialBetweenDevices = 2.9;
+	refractionIndexOfTransparentMaterial = 1.31520778;
 	/*refractionIndexOfTransparentMaterial = 1.491756;*/
 	//The data comes from the data sheet is 1.491756. Do not change it if unnecessary.
 	backgroundColorR = 0;
 	backgroundColorG = 0;
 	backgroundColorB = 0;
 
+	isAmbientLightEnabled = true;
+	ambientLightR = 0.5f;
+	ambientLightG = 0.5f;
+	ambientLightB = 0.5f;
+
+	isPointLightOneEnabled = true;
+	pointLightOnePositionX = -80;
+	pointLightOnePositionY = 100;
+	pointLightOnePositionZ = -150;
+	pointLightOneR = 0.5;
+	pointLightOneG = 0.5;
+	pointLightOneB = 0.5;
+	pointLightOneRange = 500;
+
+	isPointLightTwoEnabled = false;
+	pointLightTwoPositionX = 0;
+	pointLightTwoPositionY = 0;
+	pointLightTwoPositionZ = 0;
+	pointLightTwoR = 0;
+	pointLightTwoG = 0;
+	pointLightTwoB = 0;
+	pointLightTwoRange = 0;
+
 	isMeshOneEnabled = true;
-	meshOneModelPath = "../media/cube.dae";
-	meshOneScale = 0.4;
+	meshOneModelPath = "../media/SceneBoxes.obj";
+	meshOneScale = 1;
 	meshOneRotationX = 0;
-	meshOneRotationY = 30;
+	meshOneRotationY = 0;
 	meshOneRotationZ = 0;
 	meshOnePositionX = 0;
-	meshOnePositionY = 0;
-	meshOnePositionZ = 0.3;
+	meshOnePositionY = -0.15;
+	meshOnePositionZ = 0.5;
 
-	isMeshTwoEnabled = false;
-	meshTwoModelPath = "../media/bun_zipper-blender.obj";
+	isMeshTwoEnabled = true;
+	meshTwoModelPath = "../media/Floor.obj";
 	meshTwoScale = 1;
-	meshTwoRotationX = 0;
+	meshTwoRotationX = -90;
 	meshTwoRotationY = 0;
 	meshTwoRotationZ = 0;
 	meshTwoPositionX = 0;
-	meshTwoPositionY = -0.2;
-	meshTwoPositionZ = 0.3;
+	meshTwoPositionY = 0;
+	meshTwoPositionZ = 1.1;
 
-	isMeshThreeEnabled = false;
-	meshThreeModelPath = "../media/bun_zipper-blender.obj";
+	isMeshThreeEnabled = true;
+	meshThreeModelPath = "../media/Floor.obj";
 	meshThreeScale = 1;
 	meshThreeRotationX = 0;
 	meshThreeRotationY = 0;
 	meshThreeRotationZ = 0;
 	meshThreePositionX = 0;
-	meshThreePositionY = -0.2;
-	meshThreePositionZ = 0.3;
+	meshThreePositionY = -0.8;
+	meshThreePositionZ = 0.5;
 
 	isTestSubjectSpinning = false;
 	isAimmingAssistantEnabled = false;
 	//isSimulating = false;
-	isSingleFrameRenderingAndQuitMode = false;
+	isSingleFrameRenderingAndQuitMode = true;
 
 	isLightField = true;
 
-	virtualCameraPosX = 0.0;
-	virtualCameraPosY = 0.0;
-	virtualCameraPosZ = -1500.0/4;
-	virtualCameraFOV = 90.0;
+	virtualCameraPosR = 1500;
+	virtualCameraPosH = 300;
+	virtualCameraPosTheta = 0.0;
+	virtualCameraFOV = 30.0;
 
 	widthOfSubimageBymm = widthOfRenderzoneBymm*widthOfSubimageByPixel/widthOfRenderzoneByPixel;
 	heightOfSubimageBymm = heightOfRenderzoneBymm*heightOfSubimageByPixel/heightOfRenderzoneByPixel;
@@ -121,32 +144,35 @@ InitialParametres::InitialParametres(char* xmlConfigFilePath)
 			nodeFunctionSetting.append_child("backgroundColorG").append_attribute("value") = backgroundColorG;
 			nodeFunctionSetting.append_child("backgroundColorB").append_attribute("value") = backgroundColorB;
 
-			pugi::xml_node isAmbientLightEnabled = nodeFunctionSetting.append_child("isAmbientLightEnabled");
-			isAmbientLightEnabled.append_attribute("value") = isAmbientLightEnabled;
-			isAmbientLightEnabled.append_child("AmbientLightR").append_attribute("value") = ambientLightR;
-			isAmbientLightEnabled.append_child("AmbientLightG").append_attribute("value") = ambientLightG;
-			isAmbientLightEnabled.append_child("AmbientLightB").append_attribute("value") = ambientLightB;
+			pugi::xml_node nodeIsAmbientLightEnabled = nodeFunctionSetting.append_child("isAmbientLightEnabled");
+				nodeIsAmbientLightEnabled.append_attribute("value") = isAmbientLightEnabled;
+				nodeIsAmbientLightEnabled.append_child("ambientLightR").append_attribute("value") = ambientLightR;
+				nodeIsAmbientLightEnabled.append_child("ambientLightG").append_attribute("value") = ambientLightG;
+				nodeIsAmbientLightEnabled.append_child("ambientLightB").append_attribute("value") = ambientLightB;
+			
+			pugi::xml_node nodeIsPointLightOneEnabled = nodeFunctionSetting.append_child("isPointLightOneEnabled");
+				nodeIsPointLightOneEnabled.append_attribute("value") = isPointLightOneEnabled;
+				nodeIsPointLightOneEnabled.append_child("pointLightOnePositionX").append_attribute("value") = pointLightOnePositionX;
+				nodeIsPointLightOneEnabled.append_child("pointLightOnePositionY").append_attribute("value") = pointLightOnePositionY;
+				nodeIsPointLightOneEnabled.append_child("pointLightOnePositionZ").append_attribute("value") = pointLightOnePositionZ;
 
-			//isAmbientLightEnabled;
-			//ambientLightR;
-			//ambientLightG;
-			//ambientLightB;
+				nodeIsPointLightOneEnabled.append_child("pointLightOneR").append_attribute("value") = pointLightOneR;
+				nodeIsPointLightOneEnabled.append_child("pointLightOneG").append_attribute("value") = pointLightOneG;
+				nodeIsPointLightOneEnabled.append_child("pointLightOneB").append_attribute("value") = pointLightOneB;
 
-			// isPointLightOneEnabled;
-			// pointLightOnePosistionX;
-			// pointLightOnePosistionY;
-			// pointLightOnePosistionZ;
-			// pointLightOneR;
-			// pointLightOneG;
-			// pointLightOneB;
+				nodeIsPointLightOneEnabled.append_child("pointLightOneRange").append_attribute("value") = pointLightOneRange;
 
-			// isPointLightTwoEnabled;
-			// pointLightTwoPosistionX;
-			// pointLightTwoPosistionY;
-			// pointLightTwoPosistionZ;
-			// pointLightTwoR;
-			// pointLightTwoG;
-			// pointLightTwoB;
+			pugi::xml_node nodeIsPointLightTwoEnabled = nodeFunctionSetting.append_child("isPointLightTwoEnabled");
+				nodeIsPointLightTwoEnabled.append_attribute("value") = isPointLightTwoEnabled;
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoPositionX").append_attribute("value") = pointLightTwoPositionX;
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoPositionY").append_attribute("value") = pointLightTwoPositionY;
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoPositionZ").append_attribute("value") = pointLightTwoPositionZ;
+
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoR").append_attribute("value") = pointLightTwoR;
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoG").append_attribute("value") = pointLightTwoG;
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoB").append_attribute("value") = pointLightTwoB;
+
+				nodeIsPointLightTwoEnabled.append_child("pointLightTwoRange").append_attribute("value") = pointLightTwoRange;
 			
 			pugi::xml_node nodeIsMeshOneEnabled = nodeFunctionSetting.append_child("isMeshOneEnabled");
 				nodeIsMeshOneEnabled.append_attribute("value") = isMeshOneEnabled;
@@ -191,9 +217,9 @@ InitialParametres::InitialParametres(char* xmlConfigFilePath)
 
 			pugi::xml_node nodeIsLightField = nodeFunctionSetting.append_child("isLightField");
 				nodeIsLightField.append_attribute("value") = isLightField;
-					nodeIsLightField.append_child("virtualCameraPosX").append_attribute("value") = virtualCameraPosX;
-					nodeIsLightField.append_child("virtualCameraPosY").append_attribute("value") = virtualCameraPosY;
-					nodeIsLightField.append_child("virtualCameraPosZ").append_attribute("value") = virtualCameraPosZ;
+					nodeIsLightField.append_child("virtualCameraPosR").append_attribute("value") = virtualCameraPosR;
+					nodeIsLightField.append_child("virtualCameraPosH").append_attribute("value") = virtualCameraPosH;
+					nodeIsLightField.append_child("virtualCameraPosTheta").append_attribute("value") = virtualCameraPosTheta;
 					nodeIsLightField.append_child("virtualCameraFOV").append_attribute("value") = virtualCameraFOV;
 
 		doc.save_file(xmlConfigFilePath);
@@ -225,6 +251,31 @@ InitialParametres::InitialParametres(char* xmlConfigFilePath)
 		backgroundColorR = doc.child("Settings").child("functionSetting").child("backgroundColorR").attribute("value").as_int();
 		backgroundColorG = doc.child("Settings").child("functionSetting").child("backgroundColorG").attribute("value").as_int();
 		backgroundColorB = doc.child("Settings").child("functionSetting").child("backgroundColorB").attribute("value").as_int();
+
+
+		isAmbientLightEnabled = doc.child("Settings").child("functionSetting").child("isAmbientLightEnabled").attribute("value").as_bool();
+		ambientLightR = doc.child("Settings").child("functionSetting").child("isAmbientLightEnabled").child("ambientLightR").attribute("value").as_float();
+		ambientLightG = doc.child("Settings").child("functionSetting").child("isAmbientLightEnabled").child("ambientLightG").attribute("value").as_float();
+		ambientLightB = doc.child("Settings").child("functionSetting").child("isAmbientLightEnabled").child("ambientLightB").attribute("value").as_float();
+
+		isPointLightOneEnabled = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").attribute("value").as_bool();
+		pointLightOnePositionX = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOnePositionX").attribute("value").as_float();
+		pointLightOnePositionY = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOnePositionY").attribute("value").as_float();
+		pointLightOnePositionZ = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOnePositionZ").attribute("value").as_float();
+		pointLightOneR = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOneR").attribute("value").as_float();
+		pointLightOneG = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOneG").attribute("value").as_float();
+		pointLightOneB = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOneB").attribute("value").as_float();
+		pointLightOneRange = doc.child("Settings").child("functionSetting").child("isPointLightOneEnabled").child("pointLightOneRange").attribute("value").as_float();
+
+		isPointLightTwoEnabled = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").attribute("value").as_bool();
+		pointLightTwoPositionX = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoPositionX").attribute("value").as_float();
+		pointLightTwoPositionY = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoPositionY").attribute("value").as_float();
+		pointLightTwoPositionZ = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoPositionZ").attribute("value").as_float();
+		pointLightTwoR = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoR").attribute("value").as_float();
+		pointLightTwoG = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoG").attribute("value").as_float();
+		pointLightTwoB = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoB").attribute("value").as_float();
+		pointLightTwoRange = doc.child("Settings").child("functionSetting").child("isPointLightTwoEnabled").child("pointLightTwoRange").attribute("value").as_float();
+
 
 		isMeshOneEnabled = doc.child("Settings").child("functionSetting").child("isMeshOneEnabled").attribute("value").as_bool();
 		meshOneModelPath = doc.child("Settings").child("functionSetting").child("isMeshOneEnabled").child("meshOneModelPath").attribute("value").as_string();
@@ -262,9 +313,9 @@ InitialParametres::InitialParametres(char* xmlConfigFilePath)
 		isSingleFrameRenderingAndQuitMode = doc.child("Settings").child("functionSetting").child("isSingleFrameRenderingAndQuitMode").attribute("value").as_bool();
 		
 		isLightField = doc.child("Settings").child("functionSetting").child("isLightField").attribute("value").as_bool();
-		virtualCameraPosX = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosX").attribute("value").as_float();
-		virtualCameraPosY = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosY").attribute("value").as_float();
-		virtualCameraPosZ = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosZ").attribute("value").as_float();
+		virtualCameraPosR = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosR").attribute("value").as_float();
+		virtualCameraPosH = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosH").attribute("value").as_float();
+		virtualCameraPosTheta = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraPosTheta").attribute("value").as_float();
 		virtualCameraFOV = doc.child("Settings").child("functionSetting").child("isLightField").child("virtualCameraFOV").attribute("value").as_float();
 
 		heightOfProjectionPanelInScene = 2;

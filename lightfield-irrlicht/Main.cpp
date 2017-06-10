@@ -3,6 +3,7 @@
 #include "ObliqueMatrixList.h"
 #include "InitialParametres.h"
 #include "EventReceiverForKeyboard.h"
+#include <math.h> 
 //#include "PlaneSimulator.h"
 
 
@@ -226,8 +227,24 @@ int main()
 	}
 
 	//Add a light source to make the cube visable.
-	sceneManager->addLightSceneNode(0, core::vector3df(-80, 100, -150), video::SColorf(0.5f, 0.5f, 0.5f), 500);
-	sceneManager->setAmbientLight(video::SColorf(0.5f, 0.5f, 0.5f));
+	if(initialParametres->isAmbientLightEnabled)
+	{
+		sceneManager->setAmbientLight(video::SColorf(initialParametres->ambientLightR, initialParametres->ambientLightG, initialParametres->ambientLightB));
+	}
+	
+	if (initialParametres->isPointLightOneEnabled)
+	{
+		sceneManager->addLightSceneNode(0, 
+			core::vector3df(initialParametres->pointLightOnePositionX, initialParametres->pointLightOnePositionY, initialParametres->pointLightOnePositionZ), 
+			video::SColorf(initialParametres->pointLightOneR, initialParametres->pointLightOneG, initialParametres->pointLightOneB), initialParametres->pointLightOneRange);
+	}
+	
+	if (initialParametres->isPointLightTwoEnabled)
+	{
+		sceneManager->addLightSceneNode(0,
+			core::vector3df(initialParametres->pointLightTwoPositionX, initialParametres->pointLightTwoPositionY, initialParametres->pointLightTwoPositionZ),
+			video::SColorf(initialParametres->pointLightTwoR, initialParametres->pointLightTwoG, initialParametres->pointLightTwoB), initialParametres->pointLightTwoRange);
+	}
 
 	//Setting the Affector and the testData will change the render parametres.
 	matrix4* viewProjectionMatrixAffector = new matrix4();
@@ -257,9 +274,9 @@ int main()
 
 		currentCamera->setPosition(
 			core::vector3df(
-				initialParametres->virtualCameraPosX / initialParametres->heightOfRenderzoneBymm * 2,
-				initialParametres->virtualCameraPosY / initialParametres->heightOfRenderzoneBymm * 2,
-				initialParametres->virtualCameraPosZ / initialParametres->heightOfRenderzoneBymm * 2
+				initialParametres->virtualCameraPosR * sin(initialParametres->virtualCameraPosTheta * PI / 180) / (initialParametres->heightOfRenderzoneBymm / 2),
+				initialParametres->virtualCameraPosH / (initialParametres->heightOfRenderzoneBymm / 2),
+				-initialParametres->virtualCameraPosR * cos(initialParametres->virtualCameraPosTheta * PI / 180) / (initialParametres->heightOfRenderzoneBymm / 2)
 				)
 			);
 		currentCamera->setFOV(PI*initialParametres->virtualCameraFOV / 180);

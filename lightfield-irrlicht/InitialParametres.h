@@ -62,20 +62,22 @@ public:
 	float ambientLightB;
 
 	bool isPointLightOneEnabled;
-	float pointLightOnePosistionX;
-	float pointLightOnePosistionY;
-	float pointLightOnePosistionZ;
+	float pointLightOnePositionX;
+	float pointLightOnePositionY;
+	float pointLightOnePositionZ;
 	float pointLightOneR;
 	float pointLightOneG;
 	float pointLightOneB;
+	float pointLightOneRange;
 
 	bool isPointLightTwoEnabled;
-	float pointLightTwoPosistionX;
-	float pointLightTwoPosistionY;
-	float pointLightTwoPosistionZ;
+	float pointLightTwoPositionX;
+	float pointLightTwoPositionY;
+	float pointLightTwoPositionZ;
 	float pointLightTwoR;
 	float pointLightTwoG;
 	float pointLightTwoB;
+	float pointLightTwoRange;
 
 	bool isMeshOneEnabled;
 	std::string meshOneModelPath;
@@ -114,9 +116,9 @@ public:
 	bool isSingleFrameRenderingAndQuitMode;
 
 	bool isLightField;
-	float virtualCameraPosX;
-	float virtualCameraPosY;
-	float virtualCameraPosZ;
+	float virtualCameraPosR;
+	float virtualCameraPosH;
+	float virtualCameraPosTheta;
 	float virtualCameraFOV;
 
 	//Calculated.
